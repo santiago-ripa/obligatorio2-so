@@ -5,12 +5,15 @@ public class Barista extends Thread {
     Cola cola;
     Cafetera cafetera;
     Caja caja;
+    Metricas metricas;
 
-    public Barista(int numero, Cola cola, Cafetera cafetera, Caja caja) {
+    public Barista(int numero, Cola cola, Cafetera cafetera,
+                   Caja caja, Metricas metricas) {
         this.numero = numero;
         this.cola = cola;
         this.cafetera = cafetera;
         this.caja = caja;
+        this.metricas = metricas;
     }
 
     public void run() {
@@ -22,20 +25,25 @@ public class Barista extends Thread {
                     return;
                 }
 
+                pedido.inicio = (int) System.currentTimeMillis();
+
                 System.out.println("Barista " + numero
                         + " prepara pedido " + pedido.numero);
 
-                if (pedido.cafe == 1) {
+                if (pedido.producto.equals("CAFE")) {
                     cafetera.usar(pedido);
                 } else {
-                    Thread.sleep(300);
+                    Thread.sleep(pedido.demora);
                 }
 
-                if (pedido.origen != 1) {
+                if (pedido.origen.equals("APP") == false) {
                     caja.usar(pedido);
                 }
 
-                System.out.println("Pedido " + pedido.numero + " terminado");
+                pedido.fin = (int) System.currentTimeMillis();
+                metricas.guardar(pedido);
+
+                System.out.println("Termina pedido " + pedido.numero);
             }
         } catch (InterruptedException e) {
             System.out.println("Barista interrumpido");

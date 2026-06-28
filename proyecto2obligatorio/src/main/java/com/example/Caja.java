@@ -6,8 +6,12 @@ public class Caja {
 
     public void usar(Pedido pedido) throws InterruptedException {
         semaforo.acquire();
-        System.out.println("Pedido " + pedido.numero + " usa caja");
-        Thread.sleep(100);
-        semaforo.release();
+
+        try {
+            System.out.println("Pedido " + pedido.numero + " usa caja");
+            Thread.sleep(100);
+        } finally {
+            semaforo.release();
+        }
     }
 }
