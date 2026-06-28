@@ -7,8 +7,7 @@ public class Barista extends Thread {
     Caja caja;
     Metricas metricas;
 
-    public Barista(int numero, Cola cola, Cafetera cafetera,
-                   Caja caja, Metricas metricas) {
+    public Barista(int numero, Cola cola, Cafetera cafetera, Caja caja, Metricas metricas) {
         this.numero = numero;
         this.cola = cola;
         this.cafetera = cafetera;
@@ -25,10 +24,9 @@ public class Barista extends Thread {
                     return;
                 }
 
-                pedido.inicio = (int) System.currentTimeMillis();
+                pedido.inicio = System.currentTimeMillis();
 
-                System.out.println("Barista " + numero
-                        + " prepara pedido " + pedido.numero);
+                System.out.println("Barista " + numero + " prepara pedido " + pedido.numero);
 
                 if (pedido.producto.equals("CAFE")) {
                     cafetera.usar(pedido);
@@ -40,7 +38,7 @@ public class Barista extends Thread {
                     caja.usar(pedido);
                 }
 
-                pedido.fin = (int) System.currentTimeMillis();
+                pedido.fin = System.currentTimeMillis();
                 metricas.guardar(pedido);
 
                 System.out.println("Termina pedido " + pedido.numero);

@@ -7,8 +7,7 @@ public class Fuente extends Thread {
     Cola cola;
     Cliente[] clientes;
 
-    public Fuente(String nombre, int pausa, Cola cola,
-                  Cliente[] clientes) {
+    public Fuente(String nombre, int pausa, Cola cola, Cliente[] clientes) {
         this.nombre = nombre;
         this.pausa = pausa;
         this.cola = cola;
@@ -37,12 +36,11 @@ public class Fuente extends Thread {
                 }
 
                 if (numero % 3 == 1) {
-                    producto = "SANDWICH";
+                    producto = "SANGUCHE";
                     demora = 400;
                 }
 
-                Pedido pedido = new Pedido(numero, cliente, producto,
-                        demora, nombre);
+                Pedido pedido = new Pedido(numero, cliente, producto, demora, nombre);
                 cola.agregar(pedido);
             }
         } catch (InterruptedException e) {

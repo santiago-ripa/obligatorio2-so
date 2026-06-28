@@ -1,23 +1,24 @@
 package com.example;
 
 public class Pedido {
+    static final int FACTOR_ENVEJECIMIENTO = 200;
+
     int numero;
     Cliente cliente;
     String producto;
     int demora;
     String origen;
-    int entrada;
-    int inicio;
-    int fin;
+    long entrada;
+    long inicio;
+    long fin;
 
-    public Pedido(int numero, Cliente cliente, String producto,
-                  int demora, String origen) {
+    public Pedido(int numero, Cliente cliente, String producto, int demora, String origen) {
         this.numero = numero;
         this.cliente = cliente;
         this.producto = producto;
         this.demora = demora;
         this.origen = origen;
-        entrada = (int) System.currentTimeMillis();
+        entrada = System.currentTimeMillis();
     }
 
     public int prioridad() {
@@ -31,8 +32,8 @@ public class Pedido {
             puntos = puntos + 2;
         }
 
-        int espera = (int) System.currentTimeMillis() - entrada;
-        puntos = puntos + espera / 1000;
+        double espera = System.currentTimeMillis() - entrada;
+        puntos = puntos + (int) (espera / FACTOR_ENVEJECIMIENTO);
 
         return puntos;
     }

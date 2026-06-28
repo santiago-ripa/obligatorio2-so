@@ -1,6 +1,8 @@
 package com.example;
 
 public class Metricas {
+    static final int UMBRAL = 3000;
+
     Pedido[] pedidos = new Pedido[30];
     int cantidad = 0;
 
@@ -9,26 +11,26 @@ public class Metricas {
         cantidad = cantidad + 1;
     }
 
-    public void mostrar(Cafetera cafetera, int inicioSimulacion) {
-        int esperas = 0;
-        int totales = 0;
-        int esperaProfesores = 0;
-        int esperaEstudiantes = 0;
+    public void mostrar(Cafetera cafetera, long inicioSimulacion) {
+        long esperas = 0;
+        long totales = 0;
+        long esperaProfesores = 0;
+        long esperaEstudiantes = 0;
         int profesores = 0;
         int estudiantes = 0;
         int demorados = 0;
 
         System.out.println("");
-        System.out.println("----- METRICAS -----");
+        System.out.println("METRICAS");
 
         for (int i = 0; i < cantidad; i++) {
-            int espera = pedidos[i].inicio - pedidos[i].entrada;
-            int total = pedidos[i].fin - pedidos[i].entrada;
+            long espera = pedidos[i].inicio - pedidos[i].entrada;
+            long total = pedidos[i].fin - pedidos[i].entrada;
 
             esperas = esperas + espera;
             totales = totales + total;
 
-            if (espera > 3000) {
+            if (espera > UMBRAL) {
                 demorados = demorados + 1;
             }
 
@@ -41,7 +43,8 @@ public class Metricas {
             }
 
             System.out.println("Pedido " + pedidos[i].numero
-                    + ": espera " + espera + " ms");
+                    + " (" + pedidos[i].cliente.rol + ", "
+                    + pedidos[i].producto + "): espera " + espera + " ms");
         }
 
         if (cantidad > 0) {
@@ -52,21 +55,22 @@ public class Metricas {
         }
 
         if (profesores > 0) {
-            System.out.println("Promedio profesores: "
+            System.out.println("Espera promedio profesores: "
                     + esperaProfesores / profesores + " ms");
         }
 
         if (estudiantes > 0) {
-            System.out.println("Promedio estudiantes: "
+            System.out.println("Espera promedio estudiantes: "
                     + esperaEstudiantes / estudiantes + " ms");
         }
 
-        int duracion = (int) System.currentTimeMillis() - inicioSimulacion;
-        int uso = cafetera.tiempoUsada * 100 / duracion;
+        long duracion = System.currentTimeMillis() - inicioSimulacion;
+        if (duracion > 0) {
+            long uso = cafetera.tiempoUsada * 100 / duracion;
+            System.out.println("Uso de cafetera: " + uso + "%");
+        }
 
-        System.out.println("Uso de cafetera: " + uso + "%");
-        System.out.println("Pedidos demorados: " + demorados);
-        System.out.println("Pedidos sin atender: "
-                + (Fuente.proximo - 1 - cantidad));
+        System.out.println("Pedidos que superaron el umbral de "
+                + UMBRAL + " ms: " + demorados);
     }
 }
