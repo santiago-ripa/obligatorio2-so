@@ -11,11 +11,11 @@ public class Metricas {
         cantidad = cantidad + 1;
     }
 
-    public void mostrar(Cafetera cafetera, long inicioSimulacion) {
-        long esperas = 0;
-        long totales = 0;
-        long esperaProfesores = 0;
-        long esperaEstudiantes = 0;
+    public void mostrar(Cafetera cafetera, double inicioSimulacion) {
+        double esperas = 0;
+        double totales = 0;
+        double esperaProfesores = 0;
+        double esperaEstudiantes = 0;
         int profesores = 0;
         int estudiantes = 0;
         int demorados = 0;
@@ -24,8 +24,8 @@ public class Metricas {
         System.out.println("METRICAS");
 
         for (int i = 0; i < cantidad; i++) {
-            long espera = pedidos[i].inicio - pedidos[i].entrada;
-            long total = pedidos[i].fin - pedidos[i].entrada;
+            double espera = pedidos[i].inicio - pedidos[i].entrada;
+            double total = pedidos[i].fin - pedidos[i].entrada;
 
             esperas = esperas + espera;
             totales = totales + total;
@@ -64,9 +64,9 @@ public class Metricas {
                     + esperaEstudiantes / estudiantes + " ms");
         }
 
-        long duracion = System.currentTimeMillis() - inicioSimulacion;
+        double duracion = System.currentTimeMillis() - inicioSimulacion;
         if (duracion > 0) {
-            long uso = cafetera.tiempoUsada * 100 / duracion;
+            double uso = cafetera.tiempoUsada * 100 / duracion;
             System.out.println("Uso de cafetera: " + uso + "%");
         }
 

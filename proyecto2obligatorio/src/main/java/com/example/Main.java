@@ -2,7 +2,7 @@ package com.example;
 
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        long inicio = System.currentTimeMillis();
+        double inicio = System.currentTimeMillis();
 
         Cola cola = new Cola();
         Cafetera cafetera = new Cafetera();

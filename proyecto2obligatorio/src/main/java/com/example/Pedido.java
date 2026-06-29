@@ -8,9 +8,9 @@ public class Pedido {
     String producto;
     int demora;
     String origen;
-    long entrada;
-    long inicio;
-    long fin;
+    double entrada;
+    double inicio;
+    double fin;
 
     public Pedido(int numero, Cliente cliente, String producto, int demora, String origen) {
         this.numero = numero;
